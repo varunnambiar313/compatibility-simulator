@@ -109,14 +109,6 @@
     background: #22c55e;
     color: #020617;
   }
-
-  .success {
-    color: #4ade80;
-  }
-
-  .error {
-    color: #f87171;
-  }
 </style>
 </head>
 
@@ -154,6 +146,8 @@
 
 <script>
 const output = document.getElementById("output");
+const inputHint = document.querySelector(".input-hint");
+const mobileButtons = document.querySelector(".mobile-buttons");
 
 const lines = [
   "Initializing VA-01...",
@@ -203,6 +197,11 @@ function handleInput(key) {
 
   if (key === 'y') {
     acceptingInput = false;
+
+    // Remove prompts
+    inputHint.style.display = "none";
+    mobileButtons.style.display = "none";
+
     output.innerHTML += "\n" +
       "✔ Input accepted.\n" +
       "Deploying Valentine’s Day Protocol...\n\n" +
@@ -212,7 +211,13 @@ function handleInput(key) {
       "• Reduced pressure to be 'mature' for once\n" +
       "• Chemistry remains inexplicably high\n" +
       "• Goofy jokes with unexpected depth\n" +
-      "• Voice notes that turn into long calls\n\n";
+      "• Voice notes that turn into long calls\n\n" +
+      "Redirecting...\n";
+
+    // Redirect to thank-you page
+    setTimeout(() => {
+      window.location.href = "thankyou.html";
+    }, 3000);
   }
 
   if (key === 'n') {
