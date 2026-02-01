@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>PROJECT VA-01</title>
 
 <style>
@@ -22,24 +23,27 @@
     background: #020617;
     border: 1px solid #22c55e55;
     border-radius: 14px;
-    padding: 24px;
+    padding: 20px;
     box-shadow: 0 0 40px #22c55e22;
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
   }
 
   .profile {
     text-align: center;
+    width: 80px;
   }
 
   .profile img {
-    width: 70px;
-    height: 70px;
+    width: clamp(48px, 12vw, 70px);
+    height: clamp(48px, 12vw, 70px);
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #22c55e;
@@ -58,13 +62,14 @@
     flex: 1;
     font-weight: bold;
     letter-spacing: 1px;
+    font-size: 14px;
   }
 
   .output {
-    min-height: 260px;
     white-space: pre-wrap;
     line-height: 1.6;
     font-size: 14px;
+    min-height: 240px;
   }
 
   .cursor::after {
@@ -77,9 +82,32 @@
   }
 
   .input-hint {
-    margin-top: 12px;
+    margin-top: 10px;
     opacity: 0.7;
     font-size: 13px;
+  }
+
+  .mobile-buttons {
+    margin-top: 14px;
+    display: flex;
+    gap: 12px;
+  }
+
+  .mobile-buttons button {
+    flex: 1;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #22c55e;
+    background: #020617;
+    color: #22c55e;
+    cursor: pointer;
+  }
+
+  .mobile-buttons button:active {
+    background: #22c55e;
+    color: #020617;
   }
 
   .success {
@@ -103,7 +131,7 @@
 
     <div class="title">
       PROJECT VA-01<br>
-      Compatibility Protocol
+      Varun × Anu Compatibility Protocol
     </div>
 
     <div class="profile">
@@ -113,7 +141,15 @@
   </div>
 
   <div id="output" class="output cursor"></div>
-  <div class="input-hint">Press <b>Y</b> to proceed or <b>N</b> to abort</div>
+
+  <div class="input-hint">
+    Press <b>Y</b> to proceed or <b>N</b> to abort
+  </div>
+
+  <div class="mobile-buttons">
+    <button onclick="handleInput('y')">Y</button>
+    <button onclick="handleInput('n')">N</button>
+  </div>
 </div>
 
 <script>
@@ -124,13 +160,13 @@ const lines = [
   "Loading participant profiles...",
   "Syncing communication patterns...",
   "",
-  "✔ Chemistry ................. HIGH",
-  "✔ Long-form conversations ... VERIFIED",
-  "✔ Emotional transparency .... CONFIRMED",
-  "✔ Humor compatibility ....... STABLE",
-  "✔ Intellectual curiosity .... MUTUAL",
-  "✔ Effort consistency ........ PRESENT",
-  "✔ Future discussions ........ INITIATED",
+  "✔ Chemistry ...................... HIGH",
+  "✔ Long conversations ............. VERIFIED",
+  "✔ Emotional honesty .............. CONFIRMED",
+  "✔ Humor compatibility ............ STABLE",
+  "✔ Mutual curiosity ............... PRESENT",
+  "✔ Effort & consistency ........... OBSERVED",
+  "✔ Future discussions ............. INITIATED",
   "",
   "Conclusion:",
   "Compatibility threshold exceeded.",
@@ -145,7 +181,7 @@ function typeLine() {
   if (index < lines.length) {
     output.textContent += lines[index] + "\n";
     index++;
-    setTimeout(typeLine, 400);
+    setTimeout(typeLine, 380);
   } else {
     acceptingInput = true;
     output.classList.remove("cursor");
@@ -156,32 +192,36 @@ typeLine();
 
 const errorMessages = [
   "ERROR 417: Emotional logic mismatch detected.",
-  "WARNING: Aborting may lead to missed opportunities.",
-  "SYSTEM NOTE: Chemistry rollback not supported.",
-  "CRITICAL: Future timeline divergence detected.",
-  "ANOMALY: Input 'N' conflicts with observed data."
+  "WARNING: Chemistry rollback not supported.",
+  "SYSTEM ALERT: Opportunity loss probability high.",
+  "CRITICAL: Timeline divergence detected.",
+  "ANOMALY: Input conflicts with observed data."
 ];
 
-document.addEventListener("keydown", (e) => {
+function handleInput(key) {
   if (!acceptingInput) return;
 
-  if (e.key.toLowerCase() === "y") {
+  if (key === 'y') {
     acceptingInput = false;
     output.innerHTML += "\n" +
       "✔ Input accepted.\n" +
       "Deploying Valentine’s Day Protocol...\n\n" +
       "🎉 SUCCESS 🎉\n" +
-      "Schedule confirmed.\n" +
+      "Date successfully scheduled.\n" +
       "Expected outcome: laughter, connection, and good conversation.\n\n" +
       "End of transmission.";
   }
 
-  if (e.key.toLowerCase() === "n") {
+  if (key === 'n') {
     const randomError = errorMessages[Math.floor(Math.random() * errorMessages.length)];
     output.innerHTML += "\n" +
       randomError + "\n" +
       "Please re-enter input. (Y / N)\n";
   }
+}
+
+document.addEventListener("keydown", (e) => {
+  handleInput(e.key.toLowerCase());
 });
 </script>
 
